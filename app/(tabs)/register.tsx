@@ -157,7 +157,7 @@ const Register: React.FC = () => {
               >
                 <Picker.Item label="اختر دورك" value="" />
                 <Picker.Item label="مستخدم" value="client" />
-                <Picker.Item label="مشرف" value="company" />
+                <Picker.Item label="صاحب مشروع" value="company" />
               </Picker>
             </View>
 
