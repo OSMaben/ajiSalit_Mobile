@@ -10,9 +10,12 @@
         "splash": {
             "image": "./assets/images/logo.png",
             "resizeMode": "contain",
-            "backgroundColor": "#170738"
+            "backgroundColor": "#fff"
         },
-        "assetBundlePatterns": ["**/*"],
+        "assetBundlePatterns": [
+            "**/*",
+        "assets/fonts/*"
+    ],
         "ios": {
             "supportsTablet": true
         },
