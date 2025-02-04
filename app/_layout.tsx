@@ -15,6 +15,7 @@ export default function RootLayout() {
   
   const [fontsLoaded] = useFonts({
     'Tajawal': require('../assets/fonts/Tajawal.ttf'),
+    'TajawalRegular': require('../assets/fonts/TajawalRegular.ttf'),
   });
   
   AsyncStorage.clear()
@@ -73,3 +74,4 @@ export default function RootLayout() {
     </ToastProvider>
   );
 }
+

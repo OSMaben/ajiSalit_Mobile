@@ -11,6 +11,7 @@ module.exports = {
       extend: {
         fontFamily: {
           tajawal: ['Tajawal'],
+          tajawalregular:['TajawalRegular'],
           direction: ['rtl', 'ltr']
         },
         lineHeight: {

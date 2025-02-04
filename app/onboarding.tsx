@@ -86,7 +86,7 @@ const OnboardingScreen = () => {
               <TouchableOpacity
                 style={styles.loginBtn}
                 onPress={() => router.replace('(tabs)')}>
-                <Text style={styles.loginBtnText}>
+                <Text style={styles.loginBtnText} className='font-tajawal'>
                   تسجيل دخول
                 </Text>
               </TouchableOpacity>
@@ -95,18 +95,18 @@ const OnboardingScreen = () => {
             <View style={styles.navigationButtons}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={[styles.skipBtn]}
-                onPress={skip}>
-                <Text style={styles.skipBtnText}>
-                  تخطي
+                onPress={goToNextSlide}
+                style={styles.nextBtn}>
+                <Text style={styles.nextBtnText} className='font-tajawal'>
+                  التالي
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={goToNextSlide}
-                style={styles.nextBtn}>
-                <Text style={styles.nextBtnText}>
-                  التالي
+                style={[styles.skipBtn]}
+                onPress={skip}>
+                <Text style={styles.skipBtnText} className='font-tajawal'>
+                  تخطي
                 </Text>
               </TouchableOpacity>
             </View>
@@ -129,6 +129,7 @@ const OnboardingScreen = () => {
         data={slides}
         renderItem={({item}) => <Slide item={item} />}
         style={styles.flatList}
+        
       />
       <Footer />
     </SafeAreaView>
@@ -167,24 +168,19 @@ const styles = StyleSheet.create({
     height: 50,
   },
   navigationButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     gap: 10,
   },
   skipBtn: {
-    flex: 1,
     height: 50,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
   nextBtn: {
-    flex: 1,
     height: 50,
     borderRadius: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: '#F52525',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -194,19 +190,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   nextBtnText: {
-    color: Colors.primary,
+    color: Colors.white,
     fontWeight: 'bold',
     fontSize: 15,
   },
   loginBtn: {
     height: 50,
     borderRadius: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.red,
     justifyContent: 'center',
     alignItems: 'center',
   },
   loginBtnText: {
-    color: Colors.primary,
+    color: Colors.white,
     fontWeight: 'bold',
     fontSize: 15,
   }
