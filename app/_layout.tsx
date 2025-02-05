@@ -35,7 +35,7 @@ export default function RootLayout() {
         console.log('Error checking first launch:', error);
         setIsAppFirstLaunched(false);
       } finally {
-        setIsReady(true);  // ✅ Mark layout as ready after initialization
+        setIsReady(true); 
       }
     };
 
@@ -57,7 +57,7 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded || isAppFirstLaunched === null || !isReady) {
-    return null; // ✅ Ensure RootLayout is mounted before rendering
+    return null; 
   }
 
   return (
