@@ -7,20 +7,24 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Feather } from "@expo/vector-icons";
 import { useToast } from "react-native-toast-notifications";
 import RegisterBackImage from "@/assets/images/home.jpg";
 import AppGradient from "../../components/AppGradient";
 import TooltipComponent from "@/components/TooltipComponent";
+import HeaderWithBack from "@/components/HeaderWithToolTipAndback";
 
 const OtpVerification: React.FC = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(6);
+  const [otpText, setOtpText] = useState('تقدر تطلب كود جديد بعد ');
   const toast = useToast();
 
+
+  const {phoneNumber} = useLocalSearchParams()
   useEffect(() => {
     if (timer > 0) {
       const countdown = setInterval(() => {
@@ -30,12 +34,36 @@ const OtpVerification: React.FC = () => {
     }
   }, [timer]);
 
+  useEffect(()=>{
+      if(timer === 0)
+      {
+        setOtpText('طلب كود جديد')
+      }
+    },[timer])
+
   const handleResendCode = () => {
     if (timer === 0) {
       setTimer(59);
       toast.show("تم ارسال الكود بنجاح✅", { type: "success" });
     }
   };
+
+  useEffect(()=>{
+    try{
+      if(otp.length == 6)
+        {
+          //hna dir login dyal verification dyal app
+          toast.show("تم التوتيق بنجاح ✅", { type: "success" });
+          setTimeout(() => {
+            router.push('/CreatePIN')
+          }, 2000);
+        }
+    }catch(err)
+    {
+      console.log(err);
+      throw err;
+    }
+  }, [otp])
 
   return (
     <View className="flex-1">
@@ -47,31 +75,20 @@ const OtpVerification: React.FC = () => {
         <AppGradient colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.0)"]}>
           <SafeAreaView className="flex-1">
             {/* Header */}
-            <View className="flex-row justify-between mx-5 mt-4">
-              <TouchableOpacity onPress={() => router.back()}>
-                <View className="bg-[#461e04b3] rounded-full w-8 h-8 flex justify-center items-center">
-                  <Feather name="chevron-left" size={22} color="white" />
-                </View>
-              </TouchableOpacity>
-              <TooltipComponent
-                isVisible={tooltipVisible}
-                onClose={() => setTooltipVisible(false)}
-                onOpen={() => setTooltipVisible(true)}
-                content="فهاد الصفحة غادي تزيد الرقم الي وصلك عبر رسالة نصية✉️"
-                placement="bottom"
-              />
-            </View>
+            <HeaderWithBack 
+                    tooltipVisible={tooltipVisible} 
+                    setTooltipVisible={setTooltipVisible} 
+                    content="فهاد الصفحة غادي تزيد الرقم الي وصلك عبر رسالة نصية✉️"
+                  /> 
 
-            {/* Main Content */}
             <View className="flex-1 items-center mt-0 justify-center -pt-44">
               <Text className="text-white text-xl mb-4 pt-1 font-tajawal">
                 أدخل رمز التأكيد الذي أُرسل إلى
               </Text>
               <Text className="text-white text-lg mb-6 -mt-3 font-tajawal">
-                +212 642989876
+                {phoneNumber}
               </Text>
 
-              {/* OTP Input */}
               <View className="w-[90%]">
                 <TextInput
                   value={otp}
@@ -86,8 +103,8 @@ const OtpVerification: React.FC = () => {
                   onPress={handleResendCode}
                   disabled={timer > 0}
                 >
-                  <Text className="text-white/70 text-center mt-[-20]  mb-0 font-tajawal">
-                    تقدر تطلب كود جديد بعد {timer < 10 ? `00:0${timer}` : `00:${timer}`}
+                  <Text className="text-white/70 text-center mt-[-20]  mb-2 font-tajawal">
+                   {otpText} {timer == 0 ? '' : timer < 10 ? `00:0${timer}` : `00:${timer}`}
                   </Text>
                 </TouchableOpacity>
                 {/* OTP Display */}

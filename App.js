@@ -11,6 +11,7 @@ import { FontProvider } from '@/components/FontProvider';
 
 export default function App() {
   return (
+    
     <FontProvider>
       <View style={styles.container}>
         <StatusBar style="light" />

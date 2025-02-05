@@ -1,26 +1,32 @@
-import { View, Image, Text, Dimensions, StyleSheet } from "react-native";
-import Colors from "@/constants/Colors";
+import React from 'react';
+import { View, Image, Text, StyleSheet, Dimensions } from "react-native";
+import Colors from '@/constants/Colors';
 
-const { width, height } = Dimensions.get('window');
+interface SlideItem {
+  id: string;
+  image: any;
+  title: string;
+  subtitle: string;
+}
+const {width, height} = Dimensions.get('window');
 
-const Slide = ({ item }) => {
+const Slide: React.FC<{ item: SlideItem }> = ({ item }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-      <View style={[styles.shadowContainer, { borderWidth: 6, borderColor: '#214121', borderRadius: 33 }]}>
-        <Image
-          source={item?.image}
-          style={styles.image}
-        />
-      </View>
-
+        <View style={[styles.shadowContainer, { borderWidth: 6, borderColor: '#214121', borderRadius: 33 }]}>
+          <Image
+            source={item?.image}
+            style={styles.image}
+          />
+        </View>
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.textShadowContainer}>
           <View style={styles.textContainer} className="bg-black">
-            <Text style={styles.title} className='font-tajawal '>{item?.title}</Text>
-            <View >
-              <Text style={[styles.subtitle, { textAlign: 'center',  padding: 10, color: 'white' }]} className='font-tajawal'>
+            <Text style={styles.title} className='font-tajawal'>{item?.title}</Text>
+            <View>
+              <Text style={[styles.subtitle, { textAlign: 'center', padding: 10, color: 'white' }]} className='font-tajawal'>
                 {item?.subtitle}
               </Text>
             </View>

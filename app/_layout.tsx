@@ -10,38 +10,45 @@ import { useRouter } from "expo-router";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [isAppFirstLaunched, setIsAppFirstLaunched] = useState(null);
+  const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<boolean | null>(null);
+  const [isReady, setIsReady] = useState(false);  // ✅ Track if layout is ready
   const router = useRouter();
   
   const [fontsLoaded] = useFonts({
     'Tajawal': require('../assets/fonts/Tajawal.ttf'),
     'TajawalRegular': require('../assets/fonts/TajawalRegular.ttf'),
   });
-  
-  AsyncStorage.clear()
+
+  AsyncStorage.clear();
   useEffect(() => {
-    const checkIfFirstLaunch = async () => {
+    const initializeApp = async () => {
       try {
         const appData = await AsyncStorage.getItem('isAppFirstLaunched');
-        if (appData == null) {
+
+        if (appData === null) {
           setIsAppFirstLaunched(true);
           await AsyncStorage.setItem('isAppFirstLaunched', 'false');
-          router.replace('/onboarding');
         } else {
           setIsAppFirstLaunched(false);
-          router.replace('/(tabs)');
         }
       } catch (error) {
         console.log('Error checking first launch:', error);
         setIsAppFirstLaunched(false);
-        router.replace('/(tabs)');
+      } finally {
+        setIsReady(true);  // ✅ Mark layout as ready after initialization
       }
     };
 
     if (fontsLoaded) {
-      checkIfFirstLaunch();
+      initializeApp();
     }
-  }, [fontsLoaded, router]);
+  }, [fontsLoaded]);
+
+  useEffect(() => {
+    if (isReady && isAppFirstLaunched !== null) {
+      router.replace(isAppFirstLaunched ? '/onboarding' : '/(tabs)');
+    }
+  }, [isReady, isAppFirstLaunched, router]);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -49,8 +56,8 @@ export default function RootLayout() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded || isAppFirstLaunched === null) {
-    return null;
+  if (!fontsLoaded || isAppFirstLaunched === null || !isReady) {
+    return null; // ✅ Ensure RootLayout is mounted before rendering
   }
 
   return (
@@ -66,12 +73,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen 
-          name="(tabs)" 
-          options={{ headerShown: false }} 
-        />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </ToastProvider>
   );
 }
-

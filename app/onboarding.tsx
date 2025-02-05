@@ -18,19 +18,19 @@ const {width, height} = Dimensions.get('window');
 const slides = [
   {
     id: '1',
-    image: require('../assets/images/onboarding1.png'),
+    image: require('@/assets/images/onboarding1.png'),
     title: 'اكتشف جوهر سهولة الاستخدام!',
     subtitle: 'اكتشف جوهر سهولة الاستخدام مع واجهتنا التي تمنحك تحكمًا بديهيًا وتفاعلات سلسة بكل سهولة.',
   },
   {
     id: '2',
-    image: require('../assets/images/onboarding2.png'),
+    image: require('@/assets/images/onboarding2.png'),
     title: 'تعاونوا لتحقيق النجاح!',
     subtitle: 'استعدوا لإطلاق إمكانياتكم وشاهدوا قوة العمل الجماعي بينما ننطلق معًا في هذا المشروع الاستثنائي.',
   },
   {
     id: '3',
-    image: require('../assets/images/onboarding3.png'),
+    image: require('@/assets/images/onboarding3.png'),
     title: 'إنشاء المهام بسهولة!',
     subtitle: 'أضف المهام بسرعة، حدد المواعيد النهائية، وأضف الوصف بسهولة باستخدام تطبيق إدارة المهام الخاص بنا. بسّط سير عملك وحافظ على تنظيمك..',
   },
@@ -85,9 +85,17 @@ const OnboardingScreen = () => {
             <View style={styles.buttonWrapper}>
               <TouchableOpacity
                 style={styles.loginBtn}
-                onPress={() => router.replace('(tabs)')}>
+                onPress={() => router.replace('register')}>
                 <Text style={styles.loginBtnText} className='font-tajawal'>
                   تسجيل دخول
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                
+                onPress={() => router.replace('register')}>
+                <Text className='font-tajawalregular text-center color-white mt-2'>
+                لا تمتلك حساب؟ <Text className='underline font-tajawal' onPress={() => router.push('login')}>قم بإنشاء حساب</Text>
                 </Text>
               </TouchableOpacity>
             </View>
